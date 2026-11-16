@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calcular y comprobar tu finiquito antes de firmar (España 2026)</title>
+<meta name="description" content="Calculadora gratuita de finiquito e indemnización según el Estatuto de los Trabajadores: días del mes, vacaciones, pagas extra, despido improcedente con tramo anterior a 2012, objetivo y fin de contrato. Compara con lo que te ofrece la empresa.">
+<link rel="canonical" href="https://ycmmm-hub.github.io/finiquito/">
+<link rel="alternate" hreflang="es-ES" href="https://ycmmm-hub.github.io/finiquito/">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Comprueba tu finiquito",
+  "url": "https://ycmmm-hub.github.io/finiquito/",
+  "inLanguage": "es-ES",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Cualquiera (navegador web)",
+  "description": "Calculadora de finiquito e indemnización por despido o fin de contrato en España, con la fórmula y el artículo del Estatuto de los Trabajadores en cada línea.",
+  "offers": [
+    { "@type": "Offer", "price": "0", "priceCurrency": "EUR", "description": "Cálculo completo gratuito" },
+    { "@type": "Offer", "price": "9", "priceCurrency": "EUR", "description": "Informe de liquidación en PDF" }
+  ]
+}
+</script>
+</head>
+<body>
+<header class="site"><div class="wrap">
+  <a class="brand" href="./">Comprueba tu finiquito</a>
+  <nav>
+    <a href="calcular-finiquito-baja-voluntaria/">Baja voluntaria</a>
+    <a href="calcular-finiquito-fin-de-contrato/">Fin de contrato</a>
+    <a href="indemnizacion-despido-improcedente-antes-2012/">Despido antes de 2012</a>
+    <a href="finiquito-despido-disciplinario-y-objetivo/">Disciplinario y objetivo</a>
+  </nav>
+</div></header>
+
+<main class="wrap">
+  <h1>Comprueba tu finiquito antes de firmar</h1>
+  <p class="lead">Calcula gratis lo que te corresponde al terminar tu contrato (salario pendiente, vacaciones, pagas extra e indemnización) y compáralo con lo que te ofrece la empresa. Cada importe muestra su fórmula y el artículo del Estatuto de los Trabajadores que lo regula.</p>
+  <p class="disclaimer" role="note">Herramienta de estimación. No es asesoramiento jurídico. En caso de conflicto, consulta a un abogado laboralista o a un sindicato.</p>
+
+  <form id="calc" class="card" novalidate>
+    <fieldset>
+      <legend>1. ¿Cómo termina tu contrato?</legend>
+      <label for="tipo">Motivo de la extinción</label>
+      <select id="tipo" name="tipo" required>
+        <option value="improcedente">Despido improcedente (reconocido o declarado)</option>
+        <option value="objetivo">Despido objetivo o colectivo (ERE)</option>
+        <option value="disciplinario_procedente">Despido disciplinario procedente</option>
+        <option value="fin_temporal">Fin de contrato temporal</option>
+        <option value="dimision">Baja voluntaria (dimisión)</option>
+        <option value="periodo_prueba">No superar el periodo de prueba</option>
+      </select>
+      <div id="f-objetivo" class="hidden">
+        <label for="preaviso">Días de preaviso que te dio la empresa <span class="hint">El mínimo legal son 15 días (art. 53.1.c ET). Si te dieron menos, te deben el salario de los días que faltan.</span></label>
+        <input id="preaviso" name="preaviso_dias_dados" type="number" min="0" max="15" step="1" value="15" inputmode="numeric">
+      </div>
+      <div id="f-temporal" class="hidden">
+        <label class="check"><input type="checkbox" id="formativo" name="temporal_formativo_o_sustitucion"> Es un contrato formativo (en prácticas o para la formación) o de sustitución <span class="hint">&nbsp;Estos contratos no tienen indemnización al terminar (art. 49.1.c ET).</span></label>
+        <label for="preavisoTemp">Días de preaviso que te dio la empresa (opcional) <span class="hint">Solo cuenta si el contrato dura más de un año: la empresa debe avisarte con 15 días de antelación (art. 49.1.c ET). Escribe 0 si no te avisaron; déjalo vacío si no lo sabes.</span></label>
+        <input id="preavisoTemp" name="preaviso_temporal" type="number" min="0" max="15" step="1" inputmode="numeric">
+      </div>
+      <label for="especial">¿Tu caso es alguno de estos? <span class="hint">Tienen reglas propias que esta herramienta no calcula.</span></label>
+      <select id="especial" name="caso_especial">
+        <option value="">No, ninguno</option>
+        <option value="hogar">Empleada o empleado de hogar</option>
+        <option value="fijo_discontinuo">Fijo discontinuo</option>
+        <option value="alta_direccion">Alta dirección</option>
+        <option value="nulidad">Despido nulo</option>
+        <option value="tramitacion">Reclamo salarios de tramitación</option>
+        <option value="ere_acuerdo">ERE con acuerdo superior al mínimo legal</option>
+        <option value="incapacidad">Incapacidad permanente</option>
+      </select>
+    </fieldset>
+
+    <fieldset>
+      <legend>2. Fechas</legend>
+      <div class="row two">
+        <div><label for="inicio">Inicio del contrato <span class="hint">Fecha de alta en la empresa</span></label><input id="inicio" name="inicio" type="date" required min="1950-01-01" max="2100-12-31"></div>
+        <div><label for="fin">Último día de contrato <span class="hint">Fecha de efectos del despido o de la baja</span></label><input id="fin" name="fin" type="date" required min="1950-01-01" max="2100-12-31"></div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>3. Salario</legend>
+      <label for="mensual">Salario bruto mensual (€) <span class="hint">El que figura en tu nómina antes de retenciones. Si tus pagas extra están prorrateadas, incluye la prorrata.</span></label>
+      <input id="mensual" name="salario_mensual" type="number" min="0" step="0.01" inputmode="decimal" required placeholder="Ej.: 1800">
+      <span class="hint" style="margin-top:10px">¿Tus pagas extra vienen prorrateadas en cada nómina?</span>
+      <div class="radios" role="radiogroup">
+        <label><input type="radio" name="prorrateadas" value="no" checked> No, las cobro aparte</label>
+        <label><input type="radio" name="prorrateadas" value="si"> Sí, prorrateadas</label>
+      </div>
+      <div id="f-pagas">
+        <label for="numPagas">Número de pagas extra al año <span class="hint">El mínimo legal son 2 (art. 31 ET); tu convenio puede fijar más. Valor por defecto: 2.</span></label>
+        <input id="numPagas" type="number" min="1" max="4" step="1" value="2" inputmode="numeric">
+        <div id="pagas"></div>
+      </div>
+      <label for="anual">Salario bruto anual total (€), opcional <span class="hint">Déjalo vacío para calcularlo (12 mensualidades + pagas). Rellénalo si cobras pluses o variables que forman parte del salario.</span></label>
+      <input id="anual" name="salario_anual" type="number" min="0" step="0.01" inputmode="decimal" placeholder="Se calcula automáticamente">
+      <label class="check"><input type="checkbox" id="mesPendiente" checked> Todavía no he cobrado el salario de los días trabajados en el último mes</label>
+    </fieldset>
+
+    <fieldset>
+      <legend>4. Vacaciones</legend>
+      <div class="row three">
+        <div><label for="vacDias">Días de vacaciones al año <span class="hint">Por defecto 30 naturales (mínimo del art. 38.1 ET)</span></label><input id="vacDias" type="number" min="0" max="60" step="1" value="30" inputmode="numeric"></div>
+        <div><label for="vacUnidad">Tipo de días <span class="hint">Según tu convenio</span></label><select id="vacUnidad"><option value="naturales">Naturales</option><option value="laborables">Laborables</option></select></div>
+        <div><label for="vacTomadas">Días ya disfrutados este año</label><input id="vacTomadas" type="number" min="0" step="0.5" value="0" inputmode="decimal"></div>
+      </div>
+    </fieldset>
+
+    <details>
+      <summary>5. Lo que te ofrece la empresa (opcional)</summary>
+      <p class="hint">Copia los importes de la propuesta de finiquito que te han dado. Basta con el total; el desglose permite comparar línea a línea en el informe.</p>
+      <label for="ofTotal">Importe total que te ofrecen (€)</label>
+      <input id="ofTotal" type="number" min="0" step="0.01" inputmode="decimal">
+      <div class="row two">
+        <div><label for="ofDias">Salario de los días del mes</label><input id="ofDias" type="number" min="0" step="0.01" inputmode="decimal"></div>
+        <div><label for="ofVac">Vacaciones no disfrutadas</label><input id="ofVac" type="number" min="0" step="0.01" inputmode="decimal"></div>
+        <div><label for="ofPagas">Pagas extra (total)</label><input id="ofPagas" type="number" min="0" step="0.01" inputmode="decimal"></div>
+        <div><label for="ofInd">Indemnización</label><input id="ofInd" type="number" min="0" step="0.01" inputmode="decimal"></div>
+      </div>
+    </details>
+
+    <p id="formError" class="error" role="alert"></p>
+    <button type="submit">Calcular mi finiquito</button>
+  </form>
+
+  <section id="resultado" class="hidden" aria-live="polite">
+    <div class="card">
+      <p class="disclaimer" role="note">Herramienta de estimación. No es asesoramiento jurídico. En caso de conflicto, consulta a un abogado laboralista o a un sindicato.</p>
+      <div id="resBody"></div>
+    </div>
+
+    <div id="paywall" class="card paywall">
+      <h2 style="margin-top:0">Informe de liquidación en PDF — <span id="price">9 €</span></h2>
+      <p>El cálculo es gratis y completo. El informe te ayuda a <strong>revisar la propuesta de la empresa antes de firmar</strong>:</p>
+      <ul>
+        <li>comparación línea a línea con lo que te ofrecen y diferencias detectadas;</li>
+        <li>fórmula, artículo y enlace al BOE de cada importe;</li>
+        <li>plazos para reclamar (20 días hábiles para el despido, 1 año para cantidades);</li>
+        <li>lista de comprobación «antes de firmar el finiquito».</li>
+      </ul>
+      <div id="pwLocked">
+        <label class="check"><input type="checkbox" id="consent"> Pido recibir el código de activación de inmediato y acepto que, una vez entregado, pierdo el derecho de desistimiento sobre este contenido digital (art. 103.m TRLGDCU). He leído las <a href="condiciones.html" target="_blank" rel="noopener">condiciones de venta</a>.</label>
+        <p><button id="buyBtn" type="button">Comprar el informe</button> <span id="buyNote" class="sub"></span></p>
+        <p class="sub">Pago único de 9 € con Stripe. Si la herramienta no te funciona, te devolvemos el importe en un plazo de 30 días (<a href="condiciones.html">condiciones de venta</a>).</p>
+        <label for="code">¿Ya tienes un código de activación?</label>
+        <div class="inline"><input id="code" type="text" autocomplete="off" autocapitalize="characters" placeholder="FINI-XXXX-XXXX"><button id="activateBtn" class="secondary" type="button">Activar</button></div>
+        <p id="codeMsg" role="status"></p>
+      </div>
+      <div id="pwUnlocked" class="hidden">
+        <p>Informe desbloqueado en este navegador.</p>
+        <button id="pdfBtn" type="button">Descargar el informe (PDF)</button>
+        <p class="sub">Se abre el diálogo de impresión: elige «Guardar como PDF».</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Qué incluye el finiquito y qué la indemnización</h2>
+    <p>El <strong>finiquito</strong> es la liquidación de lo que ya has generado y no has cobrado: el salario de los días trabajados del último mes, las vacaciones generadas y no disfrutadas, y la parte proporcional de las pagas extra si no están prorrateadas. Te corresponde siempre, también si te vas por voluntad propia.</p>
+    <p>La <strong>indemnización</strong> depende del motivo: 33 días por año en el despido improcedente (45 días por el tiempo anterior al 12/02/2012), 20 días en el objetivo, 12 días en el fin de contrato temporal y nada en la baja voluntaria, el despido disciplinario procedente o el periodo de prueba.</p>
+    <p>La empresa debe entregarte una propuesta del documento de liquidación al comunicarte la extinción, y puedes pedir que un representante de los trabajadores esté presente cuando firmes el recibo del finiquito (<a href="https://www.boe.es/buscar/act.php?id=BOE-A-2015-11430#a49" rel="noopener">art. 49.2 ET</a>).</p>
+  </section>
+</main>
+
+<footer class="site"><div class="wrap">
+  <p>Herramienta de estimación. No es asesoramiento jurídico. En caso de conflicto, consulta a un abogado laboralista o a un sindicato.</p>
+  <p>Los cálculos se hacen en tu navegador: no enviamos ni guardamos tus datos. Sin cookies. <a href="aviso-legal.html">Aviso legal y privacidad</a> · <a href="condiciones.html">Condiciones de venta</a></p>
+</div></footer>
+
+<div id="informe" aria-hidden="true"></div>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
